@@ -13,14 +13,28 @@ void name_parsing(string file_path, Names* names) {
     if (file.is_open()) {
 
         string line = "";
+
+
+        // First Node
+        names->names = new Name; // Create new node from scratch.
+        Name* temp_node = names->names;
+
+        getline(file, line);
+        temp_node->name = line;
+        names->quantity++;
         
-        Node* temp_node = names->names;
-        
+
+        // Second Node and Beyond
         while (getline(file, line)) {
+
+            temp_node->next = new Name; // Create new node, linked with the previous.
+
+            temp_node->next->name = line;
             names->quantity++;
-            temp_node->data = line;
-            temp_node->next = new Node;
+
             temp_node = temp_node->next;
+
+
         }
         
         file.close();

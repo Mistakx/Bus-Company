@@ -4,16 +4,16 @@
 
 using namespace std;
 
-struct Node {
+struct Name {
 
-	string data = "";
-	Node* next = NULL;
+	string name = "";
+	Name* next = NULL;
 
 };
 
 struct Names {
 
-	Node* names = new Node;
+	Name* names = NULL;
 	int quantity = 0;
 
 };
@@ -30,8 +30,28 @@ struct Passenger {
 struct Queue {
 
 	Passenger* queue = new Passenger;
-	Passenger* first = NULL;
+	int quantity = 0;
+
 };
+
+struct Bus_driver {
+
+	string first_name = "";
+	string last_name = "";
+
+};
+
+struct Bus {
+
+	Passenger* passengers = NULL;
+	int capacity = 0;
+	Bus_driver bus_driver;
+	string licence_plate = "";
+	Bus* next = NULL;
+
+};
+
+
 
 
 void name_parsing(string file_path, Names* names);
@@ -39,3 +59,7 @@ void name_parsing(string file_path, Names* names);
 void print_nodes(Names* names);
 
 void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_names);
+
+void initialize_queue(Queue* queue, Names* first_names, Names* last_names);
+
+void print_queue(Queue* queue);

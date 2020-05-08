@@ -15,18 +15,34 @@ int main() {
     locale::global(locale("Portuguese"));
     srand(time(NULL));
 
+
+    // Initialize Names
     Names* first_names = new Names;
     Names* last_names = new Names;
 
     name_parsing(fist_name_location, first_names);
     name_parsing(last_name_location, last_names);
-
-    Queue* waiting_queue = new Queue;
-
-
     //print_nodes(last_names); //! Debug
+    //cout << last_names->quantity; //!Debug
+
+
+    // Initialize Queue
+    Queue* waiting_queue = new Queue;
+    initialize_queue(waiting_queue, first_names, last_names);
+    //print_queue(waiting_queue); //!Debug
+    //cout << waiting_queue->quantity; //!Debug
     
-    cout << last_names->quantity;
+    // Initialize Buses
+
+    /*
+    while (waiting_queue->queue != NULL) {
+
+        Bus* bus = new Bus;
+        bus->capacity = rand() % 4 + 9; // Generates a random number between 9 and 12 (including both)
+        
+    }
+    */
+    
 
 }
 
