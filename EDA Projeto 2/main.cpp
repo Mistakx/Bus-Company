@@ -21,6 +21,9 @@ int main() {
     name_parsing(fist_name_location, first_names);
     name_parsing(last_name_location, last_names);
 
+    Queue* waiting_queue = new Queue;
+
+
     //print_nodes(last_names); //! Debug
     
     cout << last_names->quantity;

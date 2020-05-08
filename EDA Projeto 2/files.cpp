@@ -18,7 +18,7 @@ void name_parsing(string file_path, Names* names) {
         
         while (getline(file, line)) {
             names->quantity++;
-            temp_node->node = line;
+            temp_node->data = line;
             temp_node->next = new Node;
             temp_node = temp_node->next;
         }
