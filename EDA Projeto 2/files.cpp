@@ -2,11 +2,11 @@
 #include <fstream>
 #include <string>
 
-#include "Header.h"
+#include "files.h"
 
 using namespace std;
 
-void name_parsing(string file_path, Names* names) {
+void parse_names_file(string file_path, Names* names) {
 
     ifstream file(file_path);
 
@@ -43,6 +43,19 @@ void name_parsing(string file_path, Names* names) {
 
     else {
         cout << "Ocorreu um erro ao tentar abrir \"" << file_path << "\"." << endl << "O ficheiro não existe, ou está a ser usado por outro processo." << endl << endl;
+    }
+
+}
+
+void print_names(Names* names) {
+
+    Name* temp_node = names->names;
+
+    while (temp_node != NULL) {
+
+        cout << temp_node->name << endl;
+        temp_node = temp_node->next;
+
     }
 
 }

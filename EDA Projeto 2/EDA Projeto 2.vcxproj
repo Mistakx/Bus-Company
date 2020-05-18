@@ -147,13 +147,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buses.cpp" />
+    <ClCompile Include="bus_stops.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="files.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="operations.cpp" />
+    <ClCompile Include="options.cpp" />
+    <ClCompile Include="passengers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buses.h" />
+    <ClInclude Include="bus_stops.h" />
     <ClInclude Include="files.h" />
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="operations.h" />
+    <ClInclude Include="options.h" />
+    <ClInclude Include="passengers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
