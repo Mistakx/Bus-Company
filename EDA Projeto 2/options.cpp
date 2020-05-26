@@ -137,7 +137,7 @@ void remove_passenger_from_queue(Passengers* queue) {
 void change_driver_name(Buses* buses) {
 
 	cout << "Número da matrícula do autocarro:";
-	string licence_plate = 0;
+	int licence_plate = 0;
 	cin >> licence_plate;
 
 	bool bus_exists = false;

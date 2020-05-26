@@ -19,3 +19,4 @@ struct Names {
 void parse_names_file(string file_path, Names* names);
 
 void print_names(Names* names);
+

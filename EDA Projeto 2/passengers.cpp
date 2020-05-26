@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void initialize_passenger(Passenger* passenger, Names* first_names, Names* passenger_last_names) {
+void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_names) {
 
 	//! Initialize First Name
 	Name* temp_node = first_names->names;
@@ -16,60 +16,42 @@ void initialize_passenger(Passenger* passenger, Names* first_names, Names* passe
 
 
 	//! Initialize Last Name
-
+	// TODO: Check implementation
 	/*
 	// DEBUG
 	cout << "Last names before passenger initialization" << endl << endl;
-	print_names(passenger_last_names);
+	print_names(last_names);
 	cout << endl << endl;
 	*/
 
-	int position_of_last_name = rand() % (passenger_last_names->quantity);
 
-	temp_node = passenger_last_names->names;
+	temp_node = last_names->names;
 
-		// If last name is the first node
-	if (position_of_last_name == 0){
+	for (int i = 0; i < (rand() % last_names->quantity); i++) {
+		temp_node = temp_node->next;
+	}
+	passenger->last_name = temp_node->name;
+
 	
-		passenger->last_name = temp_node->name;
-		passenger_last_names->names = passenger_last_names->names->next;
-		delete temp_node;
-		passenger_last_names->quantity--;
-
-	}
-
-
-	//TODO: Check if implementation is correct
-		// If last name isn't the first node
-	else {
-
-		for (int i = 0; i < (position_of_last_name); i++) {
-			temp_node = temp_node->next;
-		}
-		passenger->last_name = temp_node->next->name;
-		temp_node->next = temp_node->next->next;
-		passenger_last_names->quantity--;
-
-	}
 	/*
 	// DEBUG
 	cout << "Last names after passenger initialization (Removed node " << position_of_last_name << ")" << endl << endl;
-	print_names(passenger_last_names);
+	print_names(last_names);
 	cout << endl << endl;
 	*/
 
-	//TODO: Initialize Ticket Number
-
+	//TODO: Check if ticket number is non repeating
+	passenger->ticket_number = rand() & 10000 + 1;
 
 }
 
-void initialize_queue(Passengers* queue, Names* first_names, Names* passenger_last_names) {
+void initialize_queue(Passengers* queue, Names* first_names, Names* last_names) {
 
 	// First Passenger
 	queue->passengers = new Passenger; // Create new passenger from scratch.
 	Passenger* temp_node = queue->passengers;
 
-	initialize_passenger(temp_node, first_names, passenger_last_names);
+	initialize_passenger(temp_node, first_names, last_names);
 	queue->quantity++;
 
 	// TODO: Check implementation
@@ -78,7 +60,7 @@ void initialize_queue(Passengers* queue, Names* first_names, Names* passenger_la
 
 		temp_node->next = new Passenger; // Create new node, linked with the previous.
 
-		initialize_passenger(temp_node->next, first_names, passenger_last_names);
+		initialize_passenger(temp_node->next, first_names, last_names);
 		queue->quantity++;
 
 		// Saves the last passenger location in memory to speed up the process of adding new passengers to the queue later.

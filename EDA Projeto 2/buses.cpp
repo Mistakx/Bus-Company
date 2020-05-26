@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include "buses.h"
 
@@ -15,57 +16,27 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 
 	//! Placing passengers from waiting queue
 
-		// If the bus capacity is smaller or equal to the number of waiting passengers
-	if (bus->capacity <= queue->quantity) {
+	/*/
+	// !DEBUG
+	cout << "Queue before entering bus:" << endl;
+	print_passengers(queue);
+	cout << endl;
+	*/
 
-		/*/
-		// !DEBUG
-		cout << "Queue before entering bus:" << endl;
-		print_passengers(queue);
-		cout << endl;
-		*/
+	// Fill bus with passengers 
+	bus->passengers = remove_amount_from_queue(queue, bus->capacity);
 
-		// Fill bus with passengers 
-		bus->passengers = remove_amount_from_queue(queue, bus->capacity);
+	/*
+	// !DEBUG
+	cout << "Initialized Bus Passengers:" << endl;
+	print_passengers(bus->passengers);
+	cout << endl;
+	cout << "Queue after entering bus:" << endl;
+	print_passengers(queue);
+	cout << endl;
+	*/
 
-		/*
-		// !DEBUG
-		cout << "Initialized Bus Passengers:" << endl;
-		print_passengers(bus->passengers);
-		cout << endl;
-		cout << "Queue after entering bus:" << endl;
-		print_passengers(queue);
-		cout << endl;
-		*/
-	}
 
-		// If this was the last bus needed, and the bus capacity is higher than the number of waiting passengers
-	else {
-
-		bus->capacity = queue->quantity;
-		
-		/*
-		// !DEBUG
-		cout << "Queue before entering bus:" << endl;
-		print_passengers(queue);
-		cout << endl;
-		*/
-
-		// Fill bus with passengers 
-		bus->passengers = remove_amount_from_queue(queue, queue->quantity);
-
-		/*
-		// !DEBUG
-		cout << "Initialized Bus Passengers:" << endl;
-		print_passengers(bus->passengers);
-		cout << endl;
-		cout << "Queue after entering bus:" << endl;
-		print_passengers(queue);
-		cout << endl;
-		*/
-	}
-
-	
 	//! Initializing driver
 
 		// Initialize First Name
@@ -78,6 +49,7 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 
 
 	// Initialize Last Name
+	// TODO: Check implementation
 	temp_node = last_names->names;
 
 	for (int i = 0; i < (rand() % last_names->quantity); i++) {
@@ -85,6 +57,12 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 	}
 	bus->driver.last_name = temp_node->name;
 
+	//! Initialize license plate
+	
+	bus->licence_plate = rand() % 65535 + 4096;
+	cout << "Initializing Licence Plate Int: " <<  bus->licence_plate << endl;
+	cout << "Initializing Licence Plate Hex: " << hex << bus->licence_plate << endl;
+	
 	
 }
 

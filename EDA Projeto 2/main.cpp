@@ -3,7 +3,7 @@
 #include <time.h>
 #include <windows.h>
 
-#include "options.h"
+#include "operations.h"
 
 
 using namespace std;
@@ -24,41 +24,42 @@ int main() {
     //! Initialize Names.
     Names* first_names = new Names;
     Names* last_names = new Names;
-    Names* passenger_last_names = new Names;
     Names* bus_stop_names = new Names;
 
     parse_names_file(fist_name_location, first_names);
     parse_names_file(last_name_location, last_names);
-    parse_names_file(last_name_location, passenger_last_names);
     parse_names_file(bus_stop_names_location, bus_stop_names);
 
+    cout << "Parsed files." << endl << endl;
     //print_names(bus_stop_names); //! Debug
     //cout << last_names->amount; //!Debug
 
-
+    
     //! Initialize Passengers
     Passengers* passenger_queue = new Passengers;
-    initialize_queue(passenger_queue, first_names, passenger_last_names);
-    cout << "Waiting queue:" << endl << endl;
-    print_passengers(passenger_queue);
-    cout << endl;
-
+    initialize_queue(passenger_queue, first_names, last_names);
+    //cout << "Waiting queue:" << endl << endl;
+    //print_passengers(passenger_queue);
+    //cout << "Waiting queue amount:";
     //cout << passenger_queue->amount; //!Debug
+    //cout << endl;
+
+    
 
 
     //! Initialize Bus Stops
     Bus_stops* bus_stops = new Bus_stops;
     initialize_bus_stops(bus_stops, bus_stop_names);
-    print_bus_stops(bus_stops);
+    //print_bus_stops(bus_stops); //!DEBUG
     
-
-    //! Initialize First Bus
+    /*
+    //! Initialize Buses
     Buses* buses = new Buses;
+    buses->buses = new Bus;
+    buses->amount++;
 
-
-
-    
-    
+    initialize_bus(buses->buses, passenger_queue, first_names, last_names);
+    */
 
 }
 

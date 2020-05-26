@@ -16,7 +16,7 @@ struct Bus {
 	Passengers* passengers = NULL;
 	int capacity = 0;
 	Bus_driver driver;
-	string licence_plate = "";
+	int licence_plate = 0;
 	Bus_stop* bus_stop = NULL; // Which bus stop this bus is currently in
 	Bus* next = NULL;
 
@@ -32,4 +32,5 @@ struct Buses {
 void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last_names);
 
 void initialize_buses(Buses* buses, Passengers* queue, Names* first_names, Names* last_names);
+
 

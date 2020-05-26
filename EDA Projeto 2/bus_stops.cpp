@@ -6,14 +6,15 @@ using namespace std;
 
 void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 
-	int position_of_last_name = rand() % (bus_stop_names->quantity);
+	int position_of_bus_stop_name = rand() % (bus_stop_names->quantity); // Chooses the position of a random name to give to the bus stop
 
 	Name* temp_node = bus_stop_names->names;
 
 	// If bus stop name is the first node
-	if (position_of_last_name == 0) {
+	if (position_of_bus_stop_name == 0) {
 
-		bus_stop->name = temp_node->name;
+		bus_stop->name = bus_stop_names->names->name;
+
 		bus_stop_names->names = bus_stop_names->names->next;
 		delete temp_node;
 		bus_stop_names->quantity--;
@@ -25,7 +26,7 @@ void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 		// If bus stop name isn't the first node
 	else {
 
-		for (int i = 0; i < (position_of_last_name); i++) {
+		for (int i = 0; i < (position_of_bus_stop_name); i++) {
 			temp_node = temp_node->next;
 		}
 		bus_stop->name = temp_node->next->name;
@@ -36,7 +37,7 @@ void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 	/*
 	// DEBUG
 	cout << "Last names after passenger initialization (Removed node " << position_of_last_name << ")" << endl << endl;
-	print_names(passenger_last_names);
+	print_names(last_names);
 	cout << endl << endl;
 	*/
 
@@ -45,24 +46,29 @@ void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 void initialize_bus_stops(Bus_stops* bus_stops, Names* bus_stop_names) {
 
 	bus_stops->amount = rand() % 6 + 4; // Generates a random number between 4 and 9 (including both)
-	cout << "Bus stops to initialize: " << bus_stops->amount << endl; // DEBUG
+	cout << "Bus stops to initialize: " << bus_stops->amount << "." << endl; // DEBUG
 
-	// Initialize first bus stop
+	//! Initialize first bus stop
 	bus_stops->bus_stops = new Bus_stop;
-	Bus_stop* temp_node = bus_stops->bus_stops;
-	initialize_bus_stop(temp_node, bus_stop_names);
+	initialize_bus_stop(bus_stops->bus_stops, bus_stop_names);
+	cout << "Initialized bus stop 0 !" << endl; // DEBUG
 
 
 	// TODO: Check implementation
-	// Initialize second bus stop and beyond
-	for (int i = 0; i < (bus_stops->amount - 1); i++) {
 
-		temp_node->next = new Bus_stop;
-		initialize_bus_stop(temp_node->next, bus_stop_names);
+	// ! Initialize second bus stop and beyond
+	for (int i = 1; i < bus_stops->amount; i++) {
 
-		temp_node = temp_node->next;
+		Bus_stop* temp_node = new Bus_stop;
+		initialize_bus_stop(temp_node, bus_stop_names);
+		temp_node->next = bus_stops->bus_stops;
+		bus_stops->bus_stops = temp_node;
+
+		cout << "Initialized bus stop " << i << " !" << endl; // DEBUG
 
 	}
+
+	cout << "Initialized all bus stops." << endl << endl; // DEBUG
 
 
 
