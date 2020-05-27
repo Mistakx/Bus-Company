@@ -21,7 +21,7 @@ struct Ticket_number {
 
 struct Bus_stop {
 
-	string name = "";
+	wstring name = L"";
 	Passenger_number* ticket_numbers = NULL;
 	Bus_stop* next = NULL;
 

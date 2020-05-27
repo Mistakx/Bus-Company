@@ -1,11 +1,2 @@
-﻿  buses.cpp
-  bus_stops.cpp
-  main.cpp
-D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\main.cpp(19,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  files.cpp
-  operations.cpp
-  options.cpp
-D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\options.cpp(212,2): warning C4065: switch statement contains 'default' but no 'case' labels
-  passengers.cpp
-  Generating Code...
+﻿  files.cpp
   EDA Projeto 2.vcxproj -> D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\x64\Debug\EDA Projeto 2.exe

@@ -114,21 +114,21 @@ void print_passengers(Passengers* passengers) {
 	// TODO: Redo with a for loop
 	while (temp_node != 0) {
 
-		string name_to_print = ""; // Concatenates both names to a single string so setw() can easily be used.
+		wstring name_to_print = L""; // Concatenates both names to a single string so setw() can easily be used.
 
 
 
 		// First name
-		name_to_print = temp_node->first_name + " " + temp_node->last_name;
-		cout << left << setw(20) << name_to_print << " | " << setw(10) << temp_node->ticket_number;
+		name_to_print = temp_node->first_name + L" " + temp_node->last_name;
+		wcout << left << setw(20) << name_to_print << L" | " << setw(10) << temp_node->ticket_number;
 
 		// Second name
-		name_to_print = temp_node->next->first_name + " " + temp_node->next->last_name;
-		cout << left << setw(20) << name_to_print << " | " << setw(10) << temp_node->next->ticket_number;
+		name_to_print = temp_node->next->first_name + L" " + temp_node->next->last_name;
+		wcout << left << setw(20) << name_to_print << L" | " << setw(10) << temp_node->next->ticket_number;
 
 		// Third name
-		name_to_print = temp_node->next->next->first_name + " " + temp_node->next->next->last_name;
-		cout << left << setw(20) << name_to_print << " | " << temp_node->next->next->ticket_number << endl;
+		name_to_print = temp_node->next->next->first_name + L" " + temp_node->next->next->last_name;
+		wcout << left << setw(20) << name_to_print << L" | " << temp_node->next->next->ticket_number << endl;
 
 
 		temp_node = temp_node->next->next->next;

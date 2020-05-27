@@ -87,7 +87,7 @@ void print_bus_stops(Bus_stops* bus_stops) {
 	// TODO: Redo with a for loop
 	while (temp_node != NULL) {
 
-		cout << temp_node->name << endl;
+		wcout << temp_node->name << endl;
 		temp_node = temp_node->next;
 
 	}

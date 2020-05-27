@@ -148,14 +148,14 @@ void change_driver_name(Buses* buses) {
 
 		bus_exists = true;
 
-		string name = "";
+		wstring name = L"";
 
 		cout << "Primeiro nome: ";
-		cin >> name;
+		wcin >> name;
 		temp_node->driver.first_name = name;
 
 		cout << "Último nome: ";
-		cin >> name;
+		wcin >> name;
 		temp_node->driver.last_name = name;
 
 	}
@@ -166,14 +166,14 @@ void change_driver_name(Buses* buses) {
 
 			bus_exists = true;
 
-			string name = "";
+			wstring name = L"";
 
 			cout << "Primeiro nome: ";
-			cin >> name;
+			wcin >> name;
 			temp_node->next->driver.first_name = name;
 
 			cout << "Último nome: ";
-			cin >> name;
+			wcin >> name;
 			temp_node->next->driver.last_name = name;
 
 		}

@@ -8,11 +8,11 @@ using namespace std;
 
 void parse_names_file(string file_path, Names* names) {
 
-    ifstream file(file_path);
+    wifstream file(file_path);
 
     if (file.is_open()) {
 
-        string line = "";
+        wstring line = L"";
 
         // TODO: Check implementation
 
@@ -57,7 +57,7 @@ void print_names(Names* names) {
 
     while (temp_node != NULL) {
 
-        cout << temp_node->name << endl;
+        wcout << temp_node->name << endl;
         temp_node = temp_node->next;
 
     }

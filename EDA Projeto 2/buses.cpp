@@ -69,7 +69,7 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 void print_bus(Bus* bus) {
 
 	cout << "Capacity: " << bus->capacity << endl;
-	cout << "Driver: " << bus->driver.first_name << " " << bus->driver.last_name << endl;
+	wcout << "Driver: " << bus->driver.first_name << " " << bus->driver.last_name << endl;
 	cout << "Passengers:" << endl;
 	print_passengers(bus->passengers);
 

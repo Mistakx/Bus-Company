@@ -6,8 +6,8 @@ using namespace std;
 
 struct Bus_driver {
 
-	string first_name = "";
-	string last_name = "";
+	wstring first_name = L"";
+	wstring last_name = L"";
 
 };
 

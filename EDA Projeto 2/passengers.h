@@ -6,8 +6,8 @@ using namespace std;
 
 struct Passenger {
 
-	string first_name = "";
-	string last_name = "";
+	wstring first_name = L"";
+	wstring last_name = L"";
 	int ticket_number = 0;
 	Passenger* next = NULL;
 
