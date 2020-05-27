@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iomanip> 
+#include <concepts>
 
 #include "passengers.h"
 
@@ -104,13 +106,34 @@ Passengers* remove_amount_from_queue(Passengers* queue, int amount) { // Removes
 
 void print_passengers(Passengers* passengers) {
 
+
 	Passenger* temp_node = passengers->passengers;
+
+	
 
 	// TODO: Redo with a for loop
 	while (temp_node != 0) {
 
-		cout << temp_node->first_name << " " << temp_node->last_name << " - " << temp_node->ticket_number << endl;
-		temp_node = temp_node->next;
+		string name_to_print = ""; // Concatenates both names to a single string so setw() can easily be used.
+
+
+
+		// First name
+		name_to_print = temp_node->first_name + " " + temp_node->last_name;
+		cout << left << setw(20) << name_to_print << " | " << setw(10) << temp_node->ticket_number;
+
+		// Second name
+		name_to_print = temp_node->next->first_name + " " + temp_node->next->last_name;
+		cout << left << setw(20) << name_to_print << " | " << setw(10) << temp_node->next->ticket_number;
+
+		// Third name
+		name_to_print = temp_node->next->next->first_name + " " + temp_node->next->next->last_name;
+		cout << left << setw(20) << name_to_print << " | " << temp_node->next->next->ticket_number << endl;
+
+
+		temp_node = temp_node->next->next->next;
 	}
+
+	locale::global(locale("pt-PT.utf8"));
 
 }

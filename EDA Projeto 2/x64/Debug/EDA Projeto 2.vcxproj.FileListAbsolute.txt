@@ -1,0 +1,2 @@
+D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\x64\Debug\EDA Projeto 2.exe
+D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\x64\Debug\EDA Projeto 2.pdb

@@ -16,21 +16,28 @@ void parse_names_file(string file_path, Names* names) {
 
         // TODO: Check implementation
 
-        //! First Node
+        //! First node
         names->names = new Name;
         getline(file, line);
         names->names->name = line;
         names->quantity++;
 
         
-        //! Second Node and Beyond
+        //! Second node and beyond - add node to end 
         while (getline(file, line)) {
 
-            Name* temp_node = new Name;
-            temp_node->name = line;
-            temp_node->next = names->names;
-            names->names = temp_node;
+            Name* temp_node = names->names;
+
+            while (temp_node->next != NULL) {
+                temp_node = temp_node->next;
+            }
+
+            Name* new_node = new Name;
+            new_node->next = NULL;
+            new_node->name = line;
+            temp_node->next = new_node;
             names->quantity++;
+            
 
         }
         

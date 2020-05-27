@@ -14,8 +14,8 @@ string bus_stop_names_location = "C:\\Users\\Mistakx\\Desktop\\paragens.txt";
 
 int main() {
 
-
     locale::global(locale("pt-PT.utf8"));
+
     srand(time(NULL));
     SetConsoleOutputCP(1252);
     SetConsoleCP(1252);
@@ -30,19 +30,20 @@ int main() {
     parse_names_file(last_name_location, last_names);
     parse_names_file(bus_stop_names_location, bus_stop_names);
 
-    cout << "Parsed files." << endl << endl;
-    //print_names(bus_stop_names); //! Debug
-    //cout << last_names->amount; //!Debug
-
     
+    //cout << "Parsed files." << endl << endl;
+    //cout << "Parsed first names:" << endl;
+    //print_names(first_names); //! Debug
+    //cout << "Parsed first names amount: " << first_names->quantity << endl; //!Debug
+    //cout << endl;
+
     //! Initialize Passengers
     Passengers* passenger_queue = new Passengers;
     initialize_queue(passenger_queue, first_names, last_names);
-    //cout << "Waiting queue:" << endl << endl;
-    //print_passengers(passenger_queue);
-    //cout << "Waiting queue amount:";
-    //cout << passenger_queue->amount; //!Debug
-    //cout << endl;
+    cout << "Waiting queue:" << endl << endl;
+    print_passengers(passenger_queue);
+    cout << "Waiting queue amount: " << passenger_queue->quantity << endl; //!Debug
+    cout << endl;
 
     
 
