@@ -1,19 +1,12 @@
 #include <iostream>
 
-#include "passengers.h"
+#include "buses.h"
 
 using namespace std;
 
-struct Passenger_number {
-
-	int number = 0;
-	Passenger_number* next = NULL;
-
-};
-
 struct Ticket_number {
 
-	int root = 0;
+	int ticket_number = 0;
 	Ticket_number* left = NULL;
 	Ticket_number* right = NULL;
 
@@ -22,7 +15,8 @@ struct Ticket_number {
 struct Bus_stop {
 
 	wstring name = L"";
-	Passenger_number* ticket_numbers = NULL;
+	Ticket_number* ticket_numbers = NULL;
+	Bus* bus = NULL; // Which bus is currently at this stop
 	Bus_stop* next = NULL;
 
 };

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 #include "files.h"
 
@@ -46,20 +47,42 @@ void parse_names_file(string file_path, Names* names) {
     }
 
     else {
-        cout << "Ocorreu um erro ao tentar abrir \"" << file_path << "\"." << endl << "O ficheiro não existe, ou está a ser usado por outro processo." << endl << endl;
+        cout << "Ocorreu um erro ao tentar abrir \"" << file_path << "\"." << endl;
+        wcout << "O ficheiro não existe, ou está a ser usado por outro processo." << endl << endl;
     }
 
 }
 
+// DEBUG
 void print_names(Names* names) {
 
     Name* temp_node = names->names;
+    int position_in_row = 0; 
 
     while (temp_node != NULL) {
 
-        wcout << temp_node->name << endl;
+        // First and second elements in row
+        if ( (position_in_row == 0) || (position_in_row == 1)) {
+            
+            wcout << left << setw(40) << temp_node->name;
+            position_in_row++;
+
+        }
+
+        // Third element in row
+        else {
+            wcout << left << temp_node->name << endl;
+            position_in_row = 0; // Resets position for the next row
+
+        }
+
+
         temp_node = temp_node->next;
+        
+        
 
     }
+
+
 
 }

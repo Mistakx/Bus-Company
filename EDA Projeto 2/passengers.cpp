@@ -18,15 +18,6 @@ void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_
 
 
 	//! Initialize Last Name
-	// TODO: Check implementation
-	/*
-	// DEBUG
-	cout << "Last names before passenger initialization" << endl << endl;
-	print_names(last_names);
-	cout << endl << endl;
-	*/
-
-
 	temp_node = last_names->names;
 
 	for (int i = 0; i < (rand() % last_names->quantity); i++) {
@@ -34,16 +25,8 @@ void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_
 	}
 	passenger->last_name = temp_node->name;
 
-	
-	/*
-	// DEBUG
-	cout << "Last names after passenger initialization (Removed node " << position_of_last_name << ")" << endl << endl;
-	print_names(last_names);
-	cout << endl << endl;
-	*/
-
 	//TODO: Check if ticket number is non repeating
-	passenger->ticket_number = rand() & 10000 + 1;
+	 passenger->ticket_number = rand() % 9000 + 1000; // Generates a random number between 4 and 9 (including both)
 
 }
 
@@ -52,37 +35,24 @@ void initialize_queue(Passengers* queue, Names* first_names, Names* last_names) 
 	// First Passenger
 	queue->passengers = new Passenger; // Create new passenger from scratch.
 	Passenger* temp_node = queue->passengers;
-
 	initialize_passenger(temp_node, first_names, last_names);
 	queue->quantity++;
 
-	// TODO: Check implementation
 	// Second Passenger and Beyond
 	for (int i = 1; i < 30; i++) {
 
-		temp_node->next = new Passenger; // Create new node, linked with the previous.
-
-		initialize_passenger(temp_node->next, first_names, last_names);
+		Passenger* new_node = new Passenger;
+		initialize_passenger(new_node, first_names, last_names);
+		temp_node->next = new_node;
 		queue->quantity++;
 
-		// Saves the last passenger location in memory to speed up the process of adding new passengers to the queue later.
-		if (i == 29) {
-
-			queue->last_passenger = temp_node->next;
-
-		}
-
 		temp_node = temp_node->next;
-
-
-
 
 	}
 
 }
 
 Passengers* remove_amount_from_queue(Passengers* queue, int amount) { // Removes the first "amount" passengers from a queue
-
 
 	Passengers* removed_passengers = new Passengers;
 	removed_passengers->quantity = amount;
@@ -106,34 +76,31 @@ Passengers* remove_amount_from_queue(Passengers* queue, int amount) { // Removes
 
 void print_passengers(Passengers* passengers) {
 
-
 	Passenger* temp_node = passengers->passengers;
+	int position_in_row = 0;
 
-	
-
-	// TODO: Redo with a for loop
-	while (temp_node != 0) {
+	while (temp_node != NULL) {
 
 		wstring name_to_print = L""; // Concatenates both names to a single string so setw() can easily be used.
 
+		// First and second elements in row
+		if ((position_in_row == 0) || (position_in_row == 1)) {
 
+			name_to_print = temp_node->first_name + L" " + temp_node->last_name;
+			wcout << left << setw(22) << name_to_print << setw(6) <<  temp_node->ticket_number << L" | ";
+			position_in_row++;
 
-		// First name
-		name_to_print = temp_node->first_name + L" " + temp_node->last_name;
-		wcout << left << setw(20) << name_to_print << L" | " << setw(10) << temp_node->ticket_number;
+		}
 
-		// Second name
-		name_to_print = temp_node->next->first_name + L" " + temp_node->next->last_name;
-		wcout << left << setw(20) << name_to_print << L" | " << setw(10) << temp_node->next->ticket_number;
+		// Third element in row
+		else {
+			name_to_print = temp_node->first_name + L" " + temp_node->last_name;
+			wcout << left << setw(22) << name_to_print << setw(6)  << temp_node->ticket_number << L" | " << endl;
+			position_in_row = 0; // Resets position for the next row
 
-		// Third name
-		name_to_print = temp_node->next->next->first_name + L" " + temp_node->next->next->last_name;
-		wcout << left << setw(20) << name_to_print << L" | " << temp_node->next->next->ticket_number << endl;
+		}
 
-
-		temp_node = temp_node->next->next->next;
+		temp_node = temp_node->next;
 	}
-
-	locale::global(locale("pt-PT.utf8"));
 
 }

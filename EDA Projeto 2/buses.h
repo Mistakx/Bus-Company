@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "bus_stops.h"
+#include "passengers.h"
 
 using namespace std;
 
@@ -17,7 +17,6 @@ struct Bus {
 	int capacity = 0;
 	Bus_driver driver;
 	int licence_plate = 0;
-	Bus_stop* bus_stop = NULL; // Which bus stop this bus is currently in
 	Bus* next = NULL;
 
 };
@@ -33,4 +32,5 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 
 void initialize_buses(Buses* buses, Passengers* queue, Names* first_names, Names* last_names);
 
+void print_buses(Buses* buses);
 

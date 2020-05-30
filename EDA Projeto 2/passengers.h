@@ -16,7 +16,6 @@ struct Passenger {
 struct Passengers {
 
 	Passenger* passengers = NULL;
-	Passenger* last_passenger = NULL; // 
 	int quantity = 0;
 
 };
