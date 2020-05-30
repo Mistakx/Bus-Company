@@ -22,7 +22,25 @@ void refresh_console(Passengers* queue, Bus_stops* bus_stops) {
 
 }
 
-bool remove_passenger_from_bus(Bus* bus, int ticket_number) {
+bool buses_are_empty(Buses* buses) {
+
+	Bus* temp_node = buses->buses;
+
+	while (temp_node != NULL) {
+
+		if (temp_node->passengers->quantity != 0) {
+			return false;
+		}
+
+		temp_node = temp_node->next;
+
+	}
+	
+	return true;
+
+}
+
+bool delete_passenger_from_bus(Bus* bus, int ticket_number) {
 
 	bool passenger_exists = false;
 
@@ -45,10 +63,16 @@ bool remove_passenger_from_bus(Bus* bus, int ticket_number) {
 
 		for (int i = 1; i < bus->passengers->quantity; i++) {
 
+			//cout << "Current Passenger Node: " << temp_node->next->ticket_number << endl; // DEBUG
+
 			if (ticket_number == temp_node->next->ticket_number) {
 
+				passenger_exists = true;
+
+				Passenger* node_to_remove = temp_node->next;
 				temp_node->next = temp_node->next->next;
-				delete temp_node->next;
+				bus->passengers->quantity--;
+				delete node_to_remove;
 				break;
 
 			}
@@ -58,111 +82,143 @@ bool remove_passenger_from_bus(Bus* bus, int ticket_number) {
 		}
 	}
 
-
-	if (passenger_exists == false) {
-
-		cout << "O passangeiro escolhido não foi encontrado em nenhum autocarro." << endl;
-		system("Pause");
-
-	}
-
 	return passenger_exists; // True if removed, false otherwise
 
 }
 
-void remove_passenger_from_buses(Buses* buses) {
+void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 
-	cout << "Nª do passageiro que pretende remover: ";
-	int ticket_number = 0;
-	cin >> ticket_number;
+	//! If there exists at least one bus
+	if (buses->amount > 0) {
 
-	Bus* temp_node = buses->buses;
+		// If at least one bus isn't empty
+		if (buses_are_empty(buses) == false) {
 
-	bool passenger_was_removed = false;
+			refresh_console(queue, bus_stops);
+			wcout << "Nº do passageiro que pretende remover: ";
+			int ticket_number = 0;
+			cin >> ticket_number;
 
-	for (int i = 0; i < buses->amount; i++) {
+			Bus* temp_node = buses->buses;
 
-		if (remove_passenger_from_bus(temp_node, ticket_number) == true) {
+			bool passenger_was_removed = false;
 
-			passenger_was_removed = true;
-			cout << "Passageiro removido." << endl;
-			system("Pause");
-			break;
+			for (int i = 0; i < buses->amount; i++) {
+
+				cout << "Searching passenger in bus number: " << i << endl; // DEBUG
+
+				if (delete_passenger_from_bus(temp_node, ticket_number) == true) {
+
+					passenger_was_removed = true;
+					cout << "O passageiro " << ticket_number << " foi removido." << endl;
+					system("Pause");
+					break;
+
+				}
+
+				temp_node = temp_node->next;
+				system("Pause");
+			}
+
+			if (passenger_was_removed == false) {
+
+				wcout << "Não existe nenhum passageiro com o número " << ticket_number << " em nenhum autocarro." << endl;
+				system("Pause");
+
+			}
 
 		}
 
-		temp_node = temp_node->next;
+		// If all buses are empty
+		else {
+			refresh_console(queue, bus_stops);
+			cout << "Todos os autocarros já se encontram vazios." << endl;
+			system("Pause");
+		}
+
 
 	}
 
-	if (passenger_was_removed == false) {
-
-		wcout << "Não existe nenhum passageiro com o número " << ticket_number << " em nenhum autocarro." << endl;
+	//! If no buses exist
+	else {
+		refresh_console(queue, bus_stops);
+		wcout << "Não existem autocarros." << endl;
 		system("Pause");
-
 	}
 
-	// TODO: Add last name back to linked list
 
 }
 
 void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
-	refresh_console(queue, bus_stops);
+	// If the passenger waiting queue has atleast one passenger
+	if (queue->quantity > 0) {
 
-	wcout << "Nº do passageiro a remover: ";
-	int ticket_number = 0;
-	cin >> ticket_number;
+		refresh_console(queue, bus_stops);
 
-	bool passenger_exists = false;
+		wcout << "Nº do passageiro a remover: ";
+		int ticket_number = 0;
+		cin >> ticket_number;
 
-	Passenger* temp_node = queue->passengers;
+		bool passenger_exists = false;
 
-	// If the chosen passenger is the first passenger in the queue
-	if (ticket_number == temp_node->ticket_number) {
+		Passenger* temp_node = queue->passengers;
 
-		passenger_exists = true;
+		// If the chosen passenger is the first passenger in the queue
+		if (ticket_number == temp_node->ticket_number) {
 
-		queue->passengers = queue->passengers->next;
-		queue->quantity--;
-		cout << "O passageiro " << temp_node->ticket_number << " foi removido." << endl;
-		delete temp_node;
-		
-		system("Pause");
+			passenger_exists = true;
 
-	}
+			queue->passengers = queue->passengers->next;
+			queue->quantity--;
+			cout << "O passageiro " << ticket_number << " foi removido." << endl;
+			delete temp_node;
 
-	// If the chosen passenger is not the first passenger in the queue
-	else {
+			system("Pause");
 
-		for (int i = 1; i < queue->quantity; i++) {
-
-			if (ticket_number == temp_node->next->ticket_number) {
-
-				passenger_exists = true;
-				Passenger* node_to_delete = temp_node->next;
-				temp_node->next = temp_node->next->next;
-				queue->quantity--;
-				cout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
-				delete node_to_delete;
-
-				system("Pause");
-			}
-
-			temp_node = temp_node->next;
-			
 		}
 
+		// If the chosen passenger is not the first passenger in the queue
+		else {
+
+			for (int i = 1; i < queue->quantity; i++) {
+
+				if (ticket_number == temp_node->next->ticket_number) {
+
+					passenger_exists = true;
+					Passenger* node_to_delete = temp_node->next;
+					temp_node->next = temp_node->next->next;
+					queue->quantity--;
+					cout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
+					delete node_to_delete;
+
+					system("Pause");
+				}
+
+				temp_node = temp_node->next;
+
+			}
+
+		}
+
+		// If the chosen passenger doesn't exist in the queue
+		if (passenger_exists == false) {
+
+			wcout << "Não existe nenhum passageiro com o nº " << ticket_number << "." << endl;
+			system("Pause");
+
+		}
+
+
 	}
 
-	// If the chosen passenger doesn't exist in the queue
-	if (passenger_exists == false) {
+	// If the passenger waiting queue doesn't have any passengers
+	else {
 
-		wcout << "Não existe nenhum passageiro com o nº " << ticket_number << "." << endl;
-		system("Pause");
+		refresh_console(queue, bus_stops);
+		wcout << "A fila de espera já se encontra vazia." << endl;
 
 	}
-
 }
 
 void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
@@ -170,7 +226,7 @@ void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 	refresh_console(queue, bus_stops);
 
 	//! If there exists atleast one bus
-	if (buses->buses != NULL) {
+	if (buses->amount > 0) {
 	
 		wcout << "Número da matrícula do autocarro: ";
 		int licence_plate = 0;
@@ -180,6 +236,7 @@ void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 
 		Bus* temp_node = buses->buses;
 
+		// First bus
 		if (licence_plate == temp_node->licence_plate) {
 
 			bus_exists = true;
@@ -196,6 +253,7 @@ void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 
 		}
 
+		// Second bus and beyond
 		for (int i = 1; i < buses->amount; i++) {
 
 			if (licence_plate == temp_node->next->licence_plate) {
@@ -253,6 +311,12 @@ void options_menu(Passengers* queue, Bus_stops* bus_stops, Buses* buses) {
 
 	switch (option)
 	{
+
+	case 1: 
+		delete_passenger_from_buses(buses, queue, bus_stops);
+		options_menu(queue, bus_stops, buses);
+		break;
+
 	case 2:
 		delete_passenger_from_queue(queue, bus_stops);
 		options_menu(queue, bus_stops, buses);

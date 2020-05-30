@@ -86,7 +86,7 @@ void add_ticket_to_bus_stop(Ticket_number* root, int ticket_number) {
 
 }
 
-void delete_passengers_from_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_stops) {
+void passengers_exit_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_stops) {
 
 	Passenger* temp_node = bus_stop->bus->passengers->passengers;
 
@@ -97,7 +97,6 @@ void delete_passengers_from_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops
 		bus_stop->bus->passengers->quantity--;
 		add_ticket_to_bus_stop(bus_stop->ticket_numbers, bus_stop->bus->passengers->passengers->ticket_number);
 		cout << "O passageiro " << temp_node->ticket_number << " foi removido." << endl;
-		system("Pause");
 
 		delete temp_node;
 	}
@@ -114,7 +113,6 @@ void delete_passengers_from_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops
 			bus_stop->bus->passengers->quantity--;
 			add_ticket_to_bus_stop(bus_stop->ticket_numbers, node_to_delete->ticket_number);
 			cout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
-			system("Pause");
 			delete node_to_delete;
 		}
 		
@@ -124,7 +122,7 @@ void delete_passengers_from_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops
 
 }
 
-void delete_passengers_from_buses(Bus_stops* bus_stops, Buses* buses, Passengers* queue) {
+void passengers_exit_buses(Bus_stops* bus_stops, Buses* buses, Passengers* queue) {
 
 	Bus_stop* temp_node = bus_stops->bus_stops;
 
@@ -132,16 +130,14 @@ void delete_passengers_from_buses(Bus_stops* bus_stops, Buses* buses, Passengers
 
 		refresh_console(queue, bus_stops);
 
-		cout << "Trying to remove passengers from bus number: " << i << endl; // DEBUG
-		system("Pause");
-		cout << endl;
+		cout << "Trying to remove passengers from bus number: " << i << endl << endl; // DEBUG
 
 		// DEBUG
 		wcout << "Antes da remoção" << endl;
 		print_passengers(temp_node->bus->passengers);
 		cout << endl << endl;
 
-		delete_passengers_from_bus(temp_node, queue, bus_stops);
+		passengers_exit_bus(temp_node, queue, bus_stops);
 
 		// DEBUG
 		cout << endl;
@@ -190,7 +186,7 @@ void next_step(Buses* buses, Bus_stops* bus_stops, Passengers* queue, Names* fir
 	add_bus(buses, bus_stops, queue, first_names, last_names);
 
 	//! Random passagengers from each bus leave at the bus stop
-	delete_passengers_from_buses(bus_stops, buses, queue);
+	passengers_exit_buses(bus_stops, buses, queue);
 
 	//! Adds 15 passengers to the waiting queue
 	create_new_passengers(queue, first_names, last_names);

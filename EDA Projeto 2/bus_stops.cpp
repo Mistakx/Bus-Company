@@ -104,6 +104,9 @@ void print_bus_passangers(Bus* bus) {
 
 	}
 
+	if (bus->passengers->quantity > 0) { cout << '\b' << '\b' << '.'; } // Replaces the ',' at the end of the last name with a '.'
+
+	else { wcout << "Não existem passageiros."; }
 
 }
 
