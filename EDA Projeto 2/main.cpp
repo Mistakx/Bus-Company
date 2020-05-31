@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <iomanip>
 
+
 #include "operations.h"
 
 
@@ -15,12 +16,14 @@ string bus_stop_names_location = "C:\\Users\\Mistakx\\Desktop\\paragens.txt";
 
 int main() {
 
+    // Mãe do céu estas 4 linhas de código valem ouro!
+    // I never want to deal with encodings ever again
     locale::global(locale("pt-PT.utf8"));
-
-    srand(time(NULL));
+    setlocale(LC_ALL, "");
     SetConsoleOutputCP(1252);
     SetConsoleCP(1252);
 
+    srand(time(NULL));
 
     //! Initialize Names.
     Names* first_names = new Names;
@@ -31,11 +34,11 @@ int main() {
     parse_names_file(last_name_location, last_names);
     parse_names_file(bus_stop_names_location, bus_stop_names);
 
-    //cout << "Parsed files." << endl << endl;
-    //cout << "Parsed first names:" << endl;
-    //print_names(first_names); //! Debug
-    //cout << "Parsed first names amount: " << first_names->quantity << endl; //!Debug
-    //cout << endl;
+    cout << "Parsed files." << endl << endl;
+    cout << "Parsed first names:" << endl;
+    print_names(first_names); //! Debug
+    cout << "Parsed first names amount: " << first_names->quantity << endl; //!Debug
+    cout << endl;
 
     // If all files opened successfully
     if ( (first_names->quantity != 0) && (last_names->quantity != 0) && (bus_stop_names->quantity != 0) ) {
@@ -63,7 +66,7 @@ int main() {
             wcout << "1 - Próximo passo" << endl
                 << "2 - Opções" << endl;
             int option = 0;
-            cin >> option;
+            wcin >> option;
             switch (option)
             {
 

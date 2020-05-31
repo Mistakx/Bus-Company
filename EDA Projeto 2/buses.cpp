@@ -12,7 +12,7 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 	bus->capacity = rand() % 6 + 5; // Generates a random number between 5 and 10 (including both)
 	
 	
-	cout << endl << "Initialized bus capacity: " << bus->capacity << endl;
+	wcout << endl << "Initialized bus capacity: " << bus->capacity << endl;
 	system("Pause");
 	
 
@@ -20,20 +20,20 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 	//! Placing passengers from waiting queue
 	/*/
 	// !DEBUG
-	cout << "Queue before entering bus:" << endl;
+	wcout << "Queue before entering bus:" << endl;
 	print_passengers(queue);
-	cout << endl;
+	wcout << endl;
 	*/
 	// Fill bus with passengers 
 	bus->passengers = remove_amount_from_queue(queue, bus->capacity);
 	/*
 	// !DEBUG
-	cout << "Initialized Bus Passengers:" << endl;
+	wcout << "Initialized Bus Passengers:" << endl;
 	print_passengers(bus->passengers);
-	cout << endl;
-	cout << "Queue after entering bus:" << endl;
+	wcout << endl;
+	wcout << "Queue after entering bus:" << endl;
 	print_passengers(queue);
-	cout << endl;
+	wcout << endl;
 	*/
 
 
@@ -59,17 +59,17 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 	//! Initialize license plate
 	
 	bus->licence_plate = rand() % 65535 + 4096;
-	//cout << "Initializing Licence Plate Int: " <<  bus->licence_plate << endl; // DEBUG
-	//cout << "Initializing Licence Plate Hex: " << hex << bus->licence_plate << endl << dec; // DEBUG
+	//wcout << "Initializing Licence Plate Int: " <<  bus->licence_plate << endl; // DEBUG
+	//wcout << "Initializing Licence Plate Hex: " << hex << bus->licence_plate << endl << dec; // DEBUG
 	
 	
 }
 
 void print_bus(Bus* bus) {
 
-	cout << "Capacity: " << bus->capacity << endl;
+	wcout << "Capacity: " << bus->capacity << endl;
 	wcout << "Driver: " << bus->driver.first_name << " " << bus->driver.last_name << endl;
-	cout << "Passengers:" << endl;
+	wcout << "Passengers:" << endl;
 	print_passengers(bus->passengers);
 
 }
@@ -82,7 +82,7 @@ void initialize_buses(Buses* buses, Passengers* queue, Names* first_names, Names
 	buses->buses = new Bus;
 	Bus* temp_node = buses->buses;
 	
-	//cout << "Initializing bus number: " << bus_number << endl << endl; // DEBUG
+	//wcout << "Initializing bus number: " << bus_number << endl << endl; // DEBUG
 	initialize_bus(temp_node, queue, first_names, last_names);
 	//print_bus(temp_node); //! DEBUG
 
@@ -90,7 +90,7 @@ void initialize_buses(Buses* buses, Passengers* queue, Names* first_names, Names
 
 		temp_node->next = new Bus;
 		bus_number++;
-		cout << "Initializing bus number: " << bus_number << endl << endl;
+		wcout << "Initializing bus number: " << bus_number << endl << endl;
 		initialize_bus(temp_node->next, queue, first_names, last_names);
 		print_bus(temp_node->next); //! DEBUG
 		temp_node = temp_node->next;
@@ -112,6 +112,6 @@ void print_buses(Buses* buses) {
 
 	}
 
-	cout << endl;
+	wcout << endl;
 
 }

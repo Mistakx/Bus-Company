@@ -56,7 +56,7 @@ void add_bus(Buses* buses, Bus_stops* bus_stops, Passengers* queue, Names* first
 
 }
 
-void add_ticket_to_bus_stop(Ticket_number* root, int ticket_number) {
+Ticket_number* add_ticket_to_bus_stop(Ticket_number* root, int ticket_number) {
 
 	if (root == NULL) {
 
@@ -64,26 +64,24 @@ void add_ticket_to_bus_stop(Ticket_number* root, int ticket_number) {
 		new_node->ticket_number = ticket_number;
 		new_node->left = NULL;
 		new_node->right = NULL;
-		return;
+		return new_node;
 
 
 	}
 
 	if (ticket_number < root->ticket_number) {
 
-		add_ticket_to_bus_stop(root->left, ticket_number);
-
-
+		root->left = add_ticket_to_bus_stop(root->left, ticket_number);
+		
 	}
 
 	else {
 
-		add_ticket_to_bus_stop(root->right, ticket_number);
-
-
+		root->right = add_ticket_to_bus_stop(root->right, ticket_number);
 
 	}
 
+	return root;
 }
 
 void passengers_exit_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_stops) {
@@ -95,8 +93,8 @@ void passengers_exit_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_s
 
 		bus_stop->bus->passengers->passengers = bus_stop->bus->passengers->passengers->next;
 		bus_stop->bus->passengers->quantity--;
-		add_ticket_to_bus_stop(bus_stop->ticket_numbers, bus_stop->bus->passengers->passengers->ticket_number);
-		cout << "O passageiro " << temp_node->ticket_number << " foi removido." << endl;
+		bus_stop->ticket_numbers = add_ticket_to_bus_stop(bus_stop->ticket_numbers, temp_node->ticket_number);
+		wcout << "O passageiro " << temp_node->ticket_number << " saiu do autocarro." << endl;
 
 		delete temp_node;
 	}
@@ -111,8 +109,9 @@ void passengers_exit_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_s
 			Passenger* node_to_delete = temp_node->next;
 			temp_node->next = temp_node->next->next;
 			bus_stop->bus->passengers->quantity--;
-			add_ticket_to_bus_stop(bus_stop->ticket_numbers, node_to_delete->ticket_number);
-			cout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
+			bus_stop->ticket_numbers = add_ticket_to_bus_stop(bus_stop->ticket_numbers, node_to_delete->ticket_number);
+			wcout << "O passageiro " << node_to_delete->ticket_number << " saiu do autocarro." << endl;
+
 			delete node_to_delete;
 		}
 		
@@ -130,17 +129,17 @@ void passengers_exit_buses(Bus_stops* bus_stops, Buses* buses, Passengers* queue
 
 		refresh_console(queue, bus_stops);
 
-		cout << "Trying to remove passengers from bus number: " << i << endl << endl; // DEBUG
+		wcout << L"Trying to remove passengers from bus number: " << i << endl << endl; // DEBUG
 
 		// DEBUG
 		wcout << "Antes da remoção" << endl;
 		print_passengers(temp_node->bus->passengers);
-		cout << endl << endl;
+		wcout << endl << endl;
 
 		passengers_exit_bus(temp_node, queue, bus_stops);
 
 		// DEBUG
-		cout << endl;
+		wcout << endl;
 		wcout << "Após a remoção" << endl;
 		print_passengers(temp_node->bus->passengers);
 		system("Pause");

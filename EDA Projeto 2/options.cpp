@@ -1,24 +1,96 @@
 #include <iostream>
+#include <string>
 
 #include "options.h"
 
 using namespace std;
 
+int _print_t(Ticket_number* tree, int is_left, int offset, int depth, char s[20][255])
+{
+	char b[20];
+	int width = 5;
+
+	if (!tree) return 0;
+
+	sprintf_s(b, "(%03d)", tree->ticket_number);
+
+	int left = _print_t(tree->left, 1, offset, depth + 1, s);
+	int right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
+
+#ifdef COMPACT
+	for (int i = 0; i < width; i++)
+		s[depth][offset + left + i] = b[i];
+
+	if (depth && is_left) {
+
+		for (int i = 0; i < width + right; i++)
+			s[depth - 1][offset + left + width / 2 + i] = '-';
+
+		s[depth - 1][offset + left + width / 2] = '.';
+
+	}
+	else if (depth && !is_left) {
+
+		for (int i = 0; i < left + width; i++)
+			s[depth - 1][offset - width / 2 + i] = '-';
+
+		s[depth - 1][offset + left + width / 2] = '.';
+	}
+#else
+	for (int i = 0; i < width; i++)
+		s[2 * depth][offset + left + i] = b[i];
+
+	if (depth && is_left) {
+
+		for (int i = 0; i < width + right; i++)
+			s[2 * depth - 1][offset + left + width / 2 + i] = '-';
+
+		s[2 * depth - 1][offset + left + width / 2] = '+';
+		s[2 * depth - 1][offset + left + width + right + width / 2] = '+';
+
+	}
+	else if (depth && !is_left) {
+
+		for (int i = 0; i < left + width; i++)
+			s[2 * depth - 1][offset - width / 2 + i] = '-';
+
+		s[2 * depth - 1][offset + left + width / 2] = '+';
+		s[2 * depth - 1][offset - width / 2 - 1] = '+';
+	}
+#endif
+
+	return left + width + right;
+}
+
+void print_t(Ticket_number* tree)
+{
+	char s[20][255];
+	for (int i = 0; i < 20; i++)
+		sprintf_s(s[i], "%80s", " ");
+
+	_print_t(tree, 0, 0, 0, s);
+
+	for (int i = 0; i < 20; i++)
+		printf("%s\n", s[i]);
+
+}
+
+//_________________________________________
 void refresh_console(Passengers* queue, Bus_stops* bus_stops) {
 
 	system("cls");
 
 	// Waiting queue
-	cout << "Lista de espera:" << endl << endl;
+	wcout << "Lista de espera:" << endl << endl;
 	print_passengers(queue);
-	cout << endl
+	wcout << endl
 		<< "Quantidade de passageiros na lista de espera: " << queue->quantity << endl //!Debug
 		<< endl << endl;
 
 
 	// Bus stops
 	print_bus_stops(bus_stops); //!DEBUG
-	cout << endl;
+	wcout << endl;
 
 }
 
@@ -63,7 +135,7 @@ bool delete_passenger_from_bus(Bus* bus, int ticket_number) {
 
 		for (int i = 1; i < bus->passengers->quantity; i++) {
 
-			//cout << "Current Passenger Node: " << temp_node->next->ticket_number << endl; // DEBUG
+			//wcout << "Current Passenger Node: " << temp_node->next->ticket_number << endl; // DEBUG
 
 			if (ticket_number == temp_node->next->ticket_number) {
 
@@ -97,7 +169,7 @@ void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus
 			refresh_console(queue, bus_stops);
 			wcout << "Nº do passageiro que pretende remover: ";
 			int ticket_number = 0;
-			cin >> ticket_number;
+			wcin >> ticket_number;
 
 			Bus* temp_node = buses->buses;
 
@@ -105,13 +177,12 @@ void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus
 
 			for (int i = 0; i < buses->amount; i++) {
 
-				cout << "Searching passenger in bus number: " << i << endl; // DEBUG
+				//wcout << "Searching passenger in bus number: " << i << endl; // DEBUG
 
 				if (delete_passenger_from_bus(temp_node, ticket_number) == true) {
 
 					passenger_was_removed = true;
-					cout << "O passageiro " << ticket_number << " foi removido." << endl;
-					system("Pause");
+					wcout << "O passageiro " << ticket_number << " foi removido." << endl;
 					break;
 
 				}
@@ -132,7 +203,7 @@ void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus
 		// If all buses are empty
 		else {
 			refresh_console(queue, bus_stops);
-			cout << "Todos os autocarros já se encontram vazios." << endl;
+			wcout << "Todos os autocarros já se encontram vazios." << endl;
 			system("Pause");
 		}
 
@@ -158,7 +229,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
 		wcout << "Nº do passageiro a remover: ";
 		int ticket_number = 0;
-		cin >> ticket_number;
+		wcin >> ticket_number;
 
 		bool passenger_exists = false;
 
@@ -171,7 +242,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
 			queue->passengers = queue->passengers->next;
 			queue->quantity--;
-			cout << "O passageiro " << ticket_number << " foi removido." << endl;
+			wcout << "O passageiro " << ticket_number << " foi removido." << endl;
 			delete temp_node;
 
 			system("Pause");
@@ -189,7 +260,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 					Passenger* node_to_delete = temp_node->next;
 					temp_node->next = temp_node->next->next;
 					queue->quantity--;
-					cout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
+					wcout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
 					delete node_to_delete;
 
 					system("Pause");
@@ -221,6 +292,68 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 	}
 }
 
+void show_tickets_menu(Buses* buses,  Passengers* queue, Bus_stops* bus_stops) {
+
+	// If a bus already exists
+	if (buses->amount > 0) {
+		refresh_console(queue, bus_stops);
+
+		wcout << "Nome da paragem: "; // Has to be wcout A program should not mix input operations on wcin with input operations on wcin (or with other narrow-oriented input operations on stdin): Once an input operation has been performed on either, the standard input stream acquires an orientation (either narrow or wide) that can only be safely changed by calling freopen on stdin.
+		wstring bus_stop_name = L""; 
+		wcin.ignore();
+		getline(wcin, bus_stop_name);
+		wcout << "BUS STOP NAME: " << bus_stop_name;
+
+
+		Bus_stop* temp_node = bus_stops->bus_stops;
+		bool bus_stop_exists = false;
+
+		while (temp_node != NULL) {
+
+			// If the chosen bus stop exists
+			if (bus_stop_name == temp_node->name) {
+
+				// If the chosen bus stop has passengers
+				if (temp_node->ticket_numbers != NULL) {
+					bus_stop_exists = true;
+
+					refresh_console(queue, bus_stops);
+					print_t(temp_node->ticket_numbers);
+					system("Pause");
+				}
+
+				// If the chosen bus stop doesn't have passengers
+				else {
+					wcout << "A paragem de autocarros escolhida não tem passageiros." << endl;
+					system("Pause");
+				}
+
+				break;
+
+			}
+
+			temp_node = temp_node->next;
+
+		}
+
+		// If the chosen bus stop doesn't exist
+		if (bus_stop_exists == false) {
+
+			wcout << "A paragem de autocarros escolhida não existe." << endl;
+			system("Pause");
+
+		}
+	}
+
+	// If no buses exist
+	else {
+		refresh_console(queue, bus_stops);
+		wcout << "Ainda nenhum autocarro passou por nenhuma paragem." << endl;
+		system("Pause");
+	}
+
+}
+
 void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 
 	refresh_console(queue, bus_stops);
@@ -230,51 +363,31 @@ void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 	
 		wcout << "Número da matrícula do autocarro: ";
 		int licence_plate = 0;
-		cin >> hex >> licence_plate >> dec;
+		wcin >> hex >> licence_plate >> dec;
 
 		bool bus_exists = false;
 
 		Bus* temp_node = buses->buses;
 
-		// First bus
-		if (licence_plate == temp_node->licence_plate) {
+		while (temp_node != NULL) {
 
-			bus_exists = true;
-
-			wstring name = L"";
-
-			cout << "Primeiro nome: ";
-			wcin >> name;
-			temp_node->driver.first_name = name;
-
-			wcout << "Último nome: ";
-			wcin >> name;
-			temp_node->driver.last_name = name;
-
-		}
-
-		// Second bus and beyond
-		for (int i = 1; i < buses->amount; i++) {
-
-			if (licence_plate == temp_node->next->licence_plate) {
+			if (licence_plate == temp_node->licence_plate) {
 
 				bus_exists = true;
 
 				wstring name = L"";
 
-				cout << "Primeiro nome: ";
+				wcout << "Primeiro nome: ";
 				wcin >> name;
-				temp_node->next->driver.first_name = name;
+				temp_node->driver.first_name = name;
 
 				wcout << "Último nome: ";
 				wcin >> name;
-				temp_node->next->driver.last_name = name;
-
+				temp_node->driver.last_name = name;
+				system("Pause");
 			}
-
+			
 			temp_node = temp_node->next;
-
-
 		}
 
 		if (bus_exists == false) {
@@ -299,7 +412,7 @@ void options_menu(Passengers* queue, Bus_stops* bus_stops, Buses* buses) {
 
 	refresh_console(queue, bus_stops);
 
-	cout << "1 - Remover passageiros dos autocarros" << endl
+	wcout << "1 - Remover passageiros dos autocarros" << endl
 		<< "2 - Remover passageiros da fila de espera" << endl
 		<< "3 - Apresentar bilhetes por paragem" << endl
 		<< "4 - Alterar motorista" << endl
@@ -307,7 +420,7 @@ void options_menu(Passengers* queue, Bus_stops* bus_stops, Buses* buses) {
 		<< "0 - Voltar" << endl;
 
 	int option = 0;
-	cin >> option;
+	wcin >> option;
 
 	switch (option)
 	{
@@ -319,6 +432,11 @@ void options_menu(Passengers* queue, Bus_stops* bus_stops, Buses* buses) {
 
 	case 2:
 		delete_passenger_from_queue(queue, bus_stops);
+		options_menu(queue, bus_stops, buses);
+		break;
+
+	case 3:
+		show_tickets_menu(buses, queue, bus_stops);
 		options_menu(queue, bus_stops, buses);
 		break;
 

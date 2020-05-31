@@ -7,15 +7,15 @@ using namespace std;
 void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 
 	// ! Position to remove
-	//cout << "Bus stop names left: " << bus_stop_names->quantity; // DEBUG
+	//wcout << "Bus stop names left: " << bus_stop_names->quantity; // DEBUG
 	int position_of_bus_stop_name = rand() % (bus_stop_names->quantity); // Chooses the position of a random name to give to the bus stop
-	//cout << "      Chosen bus stop name position: " << position_of_bus_stop_name << endl; // DEBUG
+	//wcout << "      Chosen bus stop name position: " << position_of_bus_stop_name << endl; // DEBUG
 
 
 	//// DEBUG
-	//cout << "Bus stop names before passenger initialization." << endl << endl;
+	//wcout << "Bus stop names before passenger initialization." << endl << endl;
 	//print_names(bus_stop_names);
-	//cout << endl << endl;
+	//wcout << endl << endl;
 
 	//! Removing the node
 	Name* temp_node = bus_stop_names->names;
@@ -49,9 +49,9 @@ void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 	
 
 	//// DEBUG
-	//cout << "Bus stop names after passenger initialization (Removed node " << position_of_bus_stop_name << ")" << endl << endl;
+	//wcout << "Bus stop names after passenger initialization (Removed node " << position_of_bus_stop_name << ")" << endl << endl;
 	//print_names(bus_stop_names);
-	//cout << endl << endl;
+	//wcout << endl << endl;
 	
 
 }
@@ -59,12 +59,12 @@ void initialize_bus_stop(Bus_stop* bus_stop, Names* bus_stop_names) {
 void initialize_bus_stops(Bus_stops* bus_stops, Names* bus_stop_names) {
 
 	bus_stops->amount = rand() % 6 + 4; // Generates a random number between 4 and 9 (including both)
-	cout << "Bus stops to initialize: " << bus_stops->amount << "." << endl << endl; // DEBUG
+	wcout << "Bus stops to initialize: " << bus_stops->amount << "." << endl << endl; // DEBUG
 
 	//! Initialize first bus stop
 	bus_stops->bus_stops = new Bus_stop;
 	initialize_bus_stop(bus_stops->bus_stops, bus_stop_names);
-	//cout << "Initialized bus stop 0 !" << endl; // DEBUG
+	//wcout << "Initialized bus stop 0 !" << endl; // DEBUG
 
 
 	// TODO: Check implementation
@@ -77,11 +77,11 @@ void initialize_bus_stops(Bus_stops* bus_stops, Names* bus_stop_names) {
 		temp_node->next = bus_stops->bus_stops;
 		bus_stops->bus_stops = temp_node;
 
-		//cout << "Initialized bus stop " << i << " !" << endl; // DEBUG
+		//wcout << "Initialized bus stop " << i << " !" << endl; // DEBUG
 
 	}
 
-	//cout << "Initialized all bus stops." << endl << endl; // DEBUG
+	//wcout << "Initialized all bus stops." << endl << endl; // DEBUG
 
 
 
@@ -104,7 +104,7 @@ void print_bus_passangers(Bus* bus) {
 
 	}
 
-	if (bus->passengers->quantity > 0) { cout << '\b' << '\b' << '.'; } // Replaces the ',' at the end of the last name with a '.'
+	if (bus->passengers->quantity > 0) { wcout << '\b' << '\b' << '.'; } // Replaces the ',' at the end of the last name with a '.'
 
 	else { wcout << "Não existem passageiros."; }
 
@@ -121,9 +121,9 @@ void print_bus_stops(Bus_stops* bus_stops) {
 		// If there's a bus at the stop
 		if (temp_node->bus != NULL) {
 			wcout << "Autocarro: " << hex << temp_node->bus->licence_plate << " Motorista: " << temp_node->bus->driver.first_name << " " << temp_node->bus->driver.last_name << endl << dec;
-			cout << "Passageiros: ";
+			wcout << "Passageiros: ";
 			print_bus_passangers(temp_node->bus);
-			cout << endl;
+			wcout << endl;
 			
 		}
 
@@ -135,7 +135,7 @@ void print_bus_stops(Bus_stops* bus_stops) {
 		}
 
 		temp_node = temp_node->next;
-		cout << endl;
+		wcout << endl;
 	}
 
 }
