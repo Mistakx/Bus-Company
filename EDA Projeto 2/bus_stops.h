@@ -1,6 +1,8 @@
+
 #include <iostream>
 
 #include "buses.h"
+#include "refresh_console.h"
 
 using namespace std;
 
@@ -26,6 +28,10 @@ struct Bus_stops {
 	Bus_stop* bus_stops = NULL;
 	int amount = 0; // The amount of bus stops
 };
+
+void refresh_console(Passengers* queue, Bus_stops* bus_stops);
+
+bool ticket_number_already_exists_in_bus_stops(int ticket_number, Bus_stops* bus_stops);
 
 void initialize_bus_stops(Bus_stops* bus_stops, Names* bus_stop_names);
 

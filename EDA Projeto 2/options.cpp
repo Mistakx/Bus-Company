@@ -5,95 +5,8 @@
 
 using namespace std;
 
-int _print_t(Ticket_number* tree, int is_left, int offset, int depth, char s[20][255])
-{
-	char b[20];
-	int width = 5;
 
-	if (!tree) return 0;
-
-	sprintf_s(b, "(%03d)", tree->ticket_number);
-
-	int left = _print_t(tree->left, 1, offset, depth + 1, s);
-	int right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
-
-#ifdef COMPACT
-	for (int i = 0; i < width; i++)
-		s[depth][offset + left + i] = b[i];
-
-	if (depth && is_left) {
-
-		for (int i = 0; i < width + right; i++)
-			s[depth - 1][offset + left + width / 2 + i] = '-';
-
-		s[depth - 1][offset + left + width / 2] = '.';
-
-	}
-	else if (depth && !is_left) {
-
-		for (int i = 0; i < left + width; i++)
-			s[depth - 1][offset - width / 2 + i] = '-';
-
-		s[depth - 1][offset + left + width / 2] = '.';
-	}
-#else
-	for (int i = 0; i < width; i++)
-		s[2 * depth][offset + left + i] = b[i];
-
-	if (depth && is_left) {
-
-		for (int i = 0; i < width + right; i++)
-			s[2 * depth - 1][offset + left + width / 2 + i] = '-';
-
-		s[2 * depth - 1][offset + left + width / 2] = '+';
-		s[2 * depth - 1][offset + left + width + right + width / 2] = '+';
-
-	}
-	else if (depth && !is_left) {
-
-		for (int i = 0; i < left + width; i++)
-			s[2 * depth - 1][offset - width / 2 + i] = '-';
-
-		s[2 * depth - 1][offset + left + width / 2] = '+';
-		s[2 * depth - 1][offset - width / 2 - 1] = '+';
-	}
-#endif
-
-	return left + width + right;
-}
-
-void print_t(Ticket_number* tree)
-{
-	char s[20][255];
-	for (int i = 0; i < 20; i++)
-		sprintf_s(s[i], "%80s", " ");
-
-	_print_t(tree, 0, 0, 0, s);
-
-	for (int i = 0; i < 20; i++)
-		printf("%s\n", s[i]);
-
-}
-
-//_________________________________________
-void refresh_console(Passengers* queue, Bus_stops* bus_stops) {
-
-	system("cls");
-
-	// Waiting queue
-	wcout << "Lista de espera:" << endl << endl;
-	print_passengers(queue);
-	wcout << endl
-		<< "Quantidade de passageiros na lista de espera: " << queue->quantity << endl //!Debug
-		<< endl << endl;
-
-
-	// Bus stops
-	print_bus_stops(bus_stops); //!DEBUG
-	wcout << endl;
-
-}
-
+// Delete passengers from buses
 bool buses_are_empty(Buses* buses) {
 
 	Bus* temp_node = buses->buses;
@@ -107,7 +20,7 @@ bool buses_are_empty(Buses* buses) {
 		temp_node = temp_node->next;
 
 	}
-	
+
 	return true;
 
 }
@@ -167,9 +80,9 @@ void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus
 		if (buses_are_empty(buses) == false) {
 
 			refresh_console(queue, bus_stops);
-			wcout << "Nº do passageiro que pretende remover: ";
+			wcout << "Nº do passageiro a remover dos autocarros: ";
 			int ticket_number = 0;
-			wcin >> ticket_number;
+			cin >> ticket_number;
 
 			Bus* temp_node = buses->buses;
 
@@ -182,13 +95,14 @@ void delete_passenger_from_buses(Buses* buses, Passengers* queue, Bus_stops* bus
 				if (delete_passenger_from_bus(temp_node, ticket_number) == true) {
 
 					passenger_was_removed = true;
-					wcout << "O passageiro " << ticket_number << " foi removido." << endl;
+					wcout << "O passageiro nº " << ticket_number << " foi removido do autocarro." << endl;
+					system("Pause");
 					break;
 
 				}
 
 				temp_node = temp_node->next;
-				system("Pause");
+
 			}
 
 			if (passenger_was_removed == false) {
@@ -227,7 +141,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
 		refresh_console(queue, bus_stops);
 
-		wcout << "Nº do passageiro a remover: ";
+		wcout << "Nº do passageiro a remover da fila de espera: ";
 		int ticket_number = 0;
 		wcin >> ticket_number;
 
@@ -242,7 +156,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
 			queue->passengers = queue->passengers->next;
 			queue->quantity--;
-			wcout << "O passageiro " << ticket_number << " foi removido." << endl;
+			wcout << "O passageiro nº " << ticket_number << " foi removido da fila de espera." << endl;
 			delete temp_node;
 
 			system("Pause");
@@ -260,7 +174,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 					Passenger* node_to_delete = temp_node->next;
 					temp_node->next = temp_node->next->next;
 					queue->quantity--;
-					wcout << "O passageiro " << node_to_delete->ticket_number << " foi removido." << endl;
+					wcout << "O passageiro " << node_to_delete->ticket_number << " foi removido da fila de espera." << endl;
 					delete node_to_delete;
 
 					system("Pause");
@@ -275,7 +189,7 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 		// If the chosen passenger doesn't exist in the queue
 		if (passenger_exists == false) {
 
-			wcout << "Não existe nenhum passageiro com o nº " << ticket_number << "." << endl;
+			wcout << "Não existe nenhum passageiro com o nº " << ticket_number << " na fila de espera." << endl;
 			system("Pause");
 
 		}
@@ -288,8 +202,81 @@ void delete_passenger_from_queue(Passengers* queue, Bus_stops* bus_stops) {
 
 		refresh_console(queue, bus_stops);
 		wcout << "A fila de espera já se encontra vazia." << endl;
+		system("Pause");
 
 	}
+}
+
+
+// Show tickets
+int _print_tree(Ticket_number* root, int is_left, int offset, int depth, char s[20][255])
+{
+	char b[20];
+	int width = 5;
+
+	if (!root) return 0;
+
+	sprintf_s(b, "(%03d)", root->ticket_number);
+
+	int left = _print_tree(root->left, 1, offset, depth + 1, s);
+	int right = _print_tree(root->right, 0, offset + left + width, depth + 1, s);
+
+#ifdef COMPACT
+	for (int i = 0; i < width; i++)
+		s[depth][offset + left + i] = b[i];
+
+	if (depth && is_left) {
+
+		for (int i = 0; i < width + right; i++)
+			s[depth - 1][offset + left + width / 2 + i] = '-';
+
+		s[depth - 1][offset + left + width / 2] = '.';
+
+	}
+	else if (depth && !is_left) {
+
+		for (int i = 0; i < left + width; i++)
+			s[depth - 1][offset - width / 2 + i] = '-';
+
+		s[depth - 1][offset + left + width / 2] = '.';
+	}
+#else
+	for (int i = 0; i < width; i++)
+		s[2 * depth][offset + left + i] = b[i];
+
+	if (depth && is_left) {
+
+		for (int i = 0; i < width + right; i++)
+			s[2 * depth - 1][offset + left + width / 2 + i] = '-';
+
+		s[2 * depth - 1][offset + left + width / 2] = '+';
+		s[2 * depth - 1][offset + left + width + right + width / 2] = '+';
+
+	}
+	else if (depth && !is_left) {
+
+		for (int i = 0; i < left + width; i++)
+			s[2 * depth - 1][offset - width / 2 + i] = '-';
+
+		s[2 * depth - 1][offset + left + width / 2] = '+';
+		s[2 * depth - 1][offset - width / 2 - 1] = '+';
+	}
+#endif
+
+	return left + width + right;
+}
+
+void print_tree(Ticket_number* root)
+{
+	char s[20][255];
+	for (int i = 0; i < 20; i++)
+		sprintf_s(s[i], "%80s", " ");
+
+	_print_tree(root, 0, 0, 0, s);
+
+	for (int i = 0; i < 20; i++)
+		printf("%s\n", s[i]);
+
 }
 
 void show_tickets_menu(Buses* buses,  Passengers* queue, Bus_stops* bus_stops) {
@@ -302,8 +289,6 @@ void show_tickets_menu(Buses* buses,  Passengers* queue, Bus_stops* bus_stops) {
 		wstring bus_stop_name = L""; 
 		wcin.ignore();
 		getline(wcin, bus_stop_name);
-		wcout << "BUS STOP NAME: " << bus_stop_name;
-
 
 		Bus_stop* temp_node = bus_stops->bus_stops;
 		bool bus_stop_exists = false;
@@ -313,12 +298,14 @@ void show_tickets_menu(Buses* buses,  Passengers* queue, Bus_stops* bus_stops) {
 			// If the chosen bus stop exists
 			if (bus_stop_name == temp_node->name) {
 
+				bus_stop_exists = true;
+
 				// If the chosen bus stop has passengers
 				if (temp_node->ticket_numbers != NULL) {
 					bus_stop_exists = true;
 
 					refresh_console(queue, bus_stops);
-					print_t(temp_node->ticket_numbers);
+					print_tree(temp_node->ticket_numbers);
 					system("Pause");
 				}
 
@@ -354,6 +341,7 @@ void show_tickets_menu(Buses* buses,  Passengers* queue, Bus_stops* bus_stops) {
 
 }
 
+
 void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 
 	refresh_console(queue, bus_stops);
@@ -384,7 +372,7 @@ void change_driver_name(Buses* buses, Passengers* queue, Bus_stops* bus_stops) {
 				wcout << "Último nome: ";
 				wcin >> name;
 				temp_node->driver.last_name = name;
-				system("Pause");
+				
 			}
 			
 			temp_node = temp_node->next;

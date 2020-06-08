@@ -20,7 +20,9 @@ struct Passengers {
 
 };
 
-void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_names);
+bool ticket_number_already_exists_in_queue(int ticket_number, Passengers* queue);
+
+void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_names, int ticket_number);
 
 void initialize_queue(Passengers* queue, Names* first_names, Names* last_names);
 

@@ -155,6 +155,7 @@
     <ClCompile Include="operations.cpp" />
     <ClCompile Include="options.cpp" />
     <ClCompile Include="passengers.cpp" />
+    <ClCompile Include="refresh_console.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buses.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="operations.h" />
     <ClInclude Include="options.h" />
     <ClInclude Include="passengers.h" />
+    <ClInclude Include="refresh_console.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

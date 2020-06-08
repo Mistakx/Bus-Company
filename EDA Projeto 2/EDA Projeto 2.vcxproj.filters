@@ -36,6 +36,9 @@
     <ClCompile Include="operations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="refresh_console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="files.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="operations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="refresh_console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

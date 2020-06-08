@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <iomanip>
 
-
 #include "operations.h"
 
 
@@ -16,8 +15,6 @@ string bus_stop_names_location = "C:\\Users\\Mistakx\\Desktop\\paragens.txt";
 
 int main() {
 
-    // Mãe do céu estas 4 linhas de código valem ouro!
-    // I never want to deal with encodings ever again
     locale::global(locale("pt-PT.utf8"));
     setlocale(LC_ALL, "");
     SetConsoleOutputCP(1252);
@@ -34,19 +31,12 @@ int main() {
     parse_names_file(last_name_location, last_names);
     parse_names_file(bus_stop_names_location, bus_stop_names);
 
-    cout << "Parsed files." << endl << endl;
-    cout << "Parsed first names:" << endl;
-    print_names(first_names); //! Debug
-    cout << "Parsed first names amount: " << first_names->quantity << endl; //!Debug
-    cout << endl;
-
     // If all files opened successfully
     if ( (first_names->quantity != 0) && (last_names->quantity != 0) && (bus_stop_names->quantity != 0) ) {
 
         //! Initialize passengers
         Passengers* passenger_queue = new Passengers;
         initialize_queue(passenger_queue, first_names, last_names);
-
 
         //! Initialize bus stops
         Bus_stops* bus_stops = new Bus_stops;

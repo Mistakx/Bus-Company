@@ -5,36 +5,60 @@
 
 using namespace std;
 
+bool ticket_number_already_exists_in_buses(int ticket_number, Buses* buses) {
+
+	//! Check buses
+	Bus* temp_bus = buses->buses;
+
+	while (temp_bus != NULL) {
+
+		Passenger* temp_passenger = temp_bus->passengers->passengers;
+
+		while (temp_passenger != NULL) {
+
+			if (ticket_number == temp_passenger->ticket_number) {
+				return true;
+			}
+
+			temp_passenger = temp_passenger->next;
+
+		}
+
+		temp_bus = temp_bus->next;
+
+	}
+
+	return false;
+
+}
 
 void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last_names) {
 
 	//! Initializing capacity
 	bus->capacity = rand() % 6 + 5; // Generates a random number between 5 and 10 (including both)
 	
+	// DEBUG
+	system("cls");
+	cout << "Autocarro inicializado" << endl;
+	cout << endl << "Capacidade do autocarro: " << bus->capacity << endl; // DEBUG
+	system("Pause"); 
+	cout << endl;
 	
-	wcout << endl << "Initialized bus capacity: " << bus->capacity << endl;
-	system("Pause");
-	
-
 
 	//! Placing passengers from waiting queue
-	/*/
-	// !DEBUG
-	wcout << "Queue before entering bus:" << endl;
-	print_passengers(queue);
-	wcout << endl;
-	*/
-	// Fill bus with passengers 
-	bus->passengers = remove_amount_from_queue(queue, bus->capacity);
-	/*
-	// !DEBUG
-	wcout << "Initialized Bus Passengers:" << endl;
-	print_passengers(bus->passengers);
-	wcout << endl;
-	wcout << "Queue after entering bus:" << endl;
-	print_passengers(queue);
-	wcout << endl;
-	*/
+	if (queue->quantity > 0) {
+		bus->passengers = remove_amount_from_queue(queue, bus->capacity);
+		// Sets the bus capacity to the number of passengers removed, if every passenger was removed from the queue
+		if (queue->quantity == 0) {
+			bus->capacity = bus->passengers->quantity;
+		}
+	}
+	else {
+		bus->passengers = new Passengers;
+		
+		cout << "Não existem passageiros na fila de espera para inicializar corretamente o autocarro." << endl;
+		system("Pause");
+	}
 
 
 	//! Initializing driver
@@ -48,7 +72,6 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 
 
 		// Initialize Last Name
-	// TODO: Check implementation
 	temp_node = last_names->names;
 
 	for (int i = 0; i < (rand() % last_names->quantity); i++) {
@@ -71,31 +94,6 @@ void print_bus(Bus* bus) {
 	wcout << "Driver: " << bus->driver.first_name << " " << bus->driver.last_name << endl;
 	wcout << "Passengers:" << endl;
 	print_passengers(bus->passengers);
-
-}
-
-void initialize_buses(Buses* buses, Passengers* queue, Names* first_names, Names* last_names) {
-
-	int bus_number = 1;
-
-	// Initializes the first bus
-	buses->buses = new Bus;
-	Bus* temp_node = buses->buses;
-	
-	//wcout << "Initializing bus number: " << bus_number << endl << endl; // DEBUG
-	initialize_bus(temp_node, queue, first_names, last_names);
-	//print_bus(temp_node); //! DEBUG
-
-	while (queue->quantity > 0) {
-
-		temp_node->next = new Bus;
-		bus_number++;
-		wcout << "Initializing bus number: " << bus_number << endl << endl;
-		initialize_bus(temp_node->next, queue, first_names, last_names);
-		print_bus(temp_node->next); //! DEBUG
-		temp_node = temp_node->next;
-
-	}
 
 }
 

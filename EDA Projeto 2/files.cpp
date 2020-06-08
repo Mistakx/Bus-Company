@@ -15,8 +15,6 @@ void parse_names_file(string file_path, Names* names) {
 
         wstring line = L"";
 
-        // TODO: Check implementation
-
         //! First node
         names->names = new Name;
         getline(file, line);
