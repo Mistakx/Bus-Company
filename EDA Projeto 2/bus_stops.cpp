@@ -127,23 +127,6 @@ void initialize_bus_stops(Bus_stops* bus_stops, Names* bus_stop_names) {
 
 }
 
-void print_bus_passangers(Bus* bus) {
-
-	Passenger* temp_node = bus->passengers->passengers;
-
-	while (temp_node != NULL) {
-
-		wcout << temp_node->first_name << " " << temp_node->ticket_number << ", ";
-		temp_node = temp_node->next;
-
-	}
-
-	if (bus->passengers->quantity > 0) { wcout << '\b' << '\b' << '.'; } // Replaces the ',' at the end of the last name with a '.'
-
-	else { wcout << "Não existem passageiros."; }
-
-}
-
 void print_bus_stops(Bus_stops* bus_stops) {
 
 	Bus_stop* temp_node = bus_stops->bus_stops;

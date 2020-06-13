@@ -36,14 +36,14 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 
 	//! Initializing capacity
 	bus->capacity = rand() % 6 + 5; // Generates a random number between 5 and 10 (including both)
-	
+
+	/*
 	// DEBUG
-	system("cls");
 	cout << "Autocarro inicializado" << endl;
 	cout << endl << "Capacidade do autocarro: " << bus->capacity << endl; // DEBUG
 	system("Pause"); 
 	cout << endl;
-	
+	*/
 
 	//! Placing passengers from waiting queue
 	if (queue->quantity > 0) {
@@ -88,12 +88,20 @@ void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last
 	
 }
 
-void print_bus(Bus* bus) {
+void print_bus_passangers(Bus* bus) {
 
-	wcout << "Capacity: " << bus->capacity << endl;
-	wcout << "Driver: " << bus->driver.first_name << " " << bus->driver.last_name << endl;
-	wcout << "Passengers:" << endl;
-	print_passengers(bus->passengers);
+	Passenger* temp_node = bus->passengers->passengers;
+
+	while (temp_node != NULL) {
+
+		wcout << temp_node->first_name << " " << temp_node->ticket_number << ", ";
+		temp_node = temp_node->next;
+
+	}
+
+	if (bus->passengers->quantity > 0) { wcout << '\b' << '\b' << '.'; } // Replaces the ',' at the end of the last name with a '.'
+
+	else { wcout << "Não existem passageiros."; }
 
 }
 
@@ -113,3 +121,4 @@ void print_buses(Buses* buses) {
 	wcout << endl;
 
 }
+

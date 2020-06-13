@@ -95,7 +95,7 @@ void passengers_exit_bus(Bus_stop* bus_stop, Passengers* queue, Bus_stops* bus_s
 
 	cout << "Passageiro: " << temp_node->ticket_number << endl;
 
-	if (0 == 0) { // (rand() % 4)
+	if ((rand() % 4) == 0) {
 
 		
 
@@ -229,7 +229,7 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 		}
 
 		// Creates 15 new passengers and puts them in the passenger waiting queue.
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 15 ; i++) { 
 
 			Passenger* new_node = new Passenger;
 
@@ -248,7 +248,7 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 
 			}
 
-			initialize_passenger(new_node, first_names, last_names, ticket_number); // TODO: Random number this
+			initialize_passenger(new_node, first_names, last_names, ticket_number);
 
 			temp_node->next = new_node;
 			queue->quantity++;
@@ -281,7 +281,7 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 
 		}
 
-		initialize_passenger(queue->passengers, first_names, last_names, ticket_number); // TODO: Random number this
+		initialize_passenger(queue->passengers, first_names, last_names, ticket_number);
 		queue->quantity++;
 
 		// Create second passenger and beyond
@@ -304,7 +304,7 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 
 			}
 
-			initialize_passenger(new_node, first_names, last_names, ticket_number); // TODO: Random number this
+			initialize_passenger(new_node, first_names, last_names, ticket_number);
 			temp_node->next = new_node;
 			queue->quantity++;
 
@@ -320,6 +320,9 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 
 void next_step(Buses* buses, Bus_stops* bus_stops, Passengers* queue, Names* first_names, Names* last_names) {
 
+	//! Adds 15 passengers to the waiting queue
+	create_new_passengers(queue, first_names, last_names, buses, bus_stops);
+
 	//! Moves all buses to the next stop
 	move_buses_to_next_stop(bus_stops, buses);
 
@@ -329,8 +332,7 @@ void next_step(Buses* buses, Bus_stops* bus_stops, Passengers* queue, Names* fir
 	//! Random passagengers from each bus leave at the bus stop
 	passengers_exit_buses(bus_stops, buses, queue);
 
-	//! Adds 15 passengers to the waiting queue
-	create_new_passengers(queue, first_names, last_names, buses, bus_stops);
+
 
 
 }	

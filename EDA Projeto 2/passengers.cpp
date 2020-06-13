@@ -44,8 +44,6 @@ void initialize_passenger(Passenger* passenger, Names* first_names, Names* last_
 	}
 	passenger->last_name = temp_node->name;
 
-	//TODO: Check if ticket number is non repeating
-	//passenger->ticket_number = rand() % 9000 + 1000; // Generates a random number between 4 and 9 (including both)
 	passenger->ticket_number = ticket_number;
 
 }

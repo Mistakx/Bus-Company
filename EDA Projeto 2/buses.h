@@ -32,5 +32,5 @@ bool ticket_number_already_exists_in_buses(int ticket_number, Buses* buses);
 
 void initialize_bus(Bus* bus, Passengers* queue, Names* first_names, Names* last_names);
 
-void print_buses(Buses* buses);
+void print_bus_passangers(Bus* bus);
 
