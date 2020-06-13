@@ -5,8 +5,6 @@
 
 #include "bus_stops.h"
 
-void print_BST(Ticket_number* tree);
-
 void options_menu(Passengers* queue, Bus_stops* bus_stops, Buses* buses);
 
 #endif

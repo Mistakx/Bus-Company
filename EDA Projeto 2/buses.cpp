@@ -105,6 +105,7 @@ void print_bus_passangers(Bus* bus) {
 
 }
 
+/*
 // DEBUG
 void print_buses(Buses* buses) {
 
@@ -121,4 +122,4 @@ void print_buses(Buses* buses) {
 	wcout << endl;
 
 }
-
+*/

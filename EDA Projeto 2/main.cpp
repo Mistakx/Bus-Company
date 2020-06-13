@@ -15,16 +15,12 @@ string bus_stop_names_location = "C:\\Users\\Mistakx\\Desktop\\paragens.txt";
 
 int main() {
 
-
-
     locale::global(locale("pt-PT.utf8"));
     setlocale(LC_ALL, "");
     SetConsoleOutputCP(1252);
     SetConsoleCP(1252);
 
     srand(time(NULL));
-
-    
 
     //! Initialize Names.
     Names* first_names = new Names;
