@@ -1,0 +1,9 @@
+﻿  main.cpp
+D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\main.cpp(23,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  operations.cpp
+  Generating code
+  7 of 340 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  EDA Projeto 2.vcxproj -> D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\x64\Release\EDA Projeto 2.exe

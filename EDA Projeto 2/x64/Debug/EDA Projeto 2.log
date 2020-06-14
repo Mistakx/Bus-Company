@@ -1,3 +1,4 @@
-﻿  options.cpp
-D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\options.cpp(478): warning C4715: 'remove_passenger_from_bus_stop': not all control paths return a value
+﻿  main.cpp
+D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\main.cpp(13,29): warning C4129: 'd': unrecognized character escape sequence
+D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\main.cpp(23,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   EDA Projeto 2.vcxproj -> D:\Tools\Programming\My Programs\University\Bus-Company\EDA Projeto 2\x64\Debug\EDA Projeto 2.exe

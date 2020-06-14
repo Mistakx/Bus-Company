@@ -236,7 +236,7 @@ void create_new_passengers(Passengers* queue, Names* first_names, Names* last_na
 			// Generate non existing random number
 			int ticket_number = 0;
 			while (true) {
-				ticket_number = rand() % 9000 + 1000; // Generates a random number between 1000 and 9999 (including both)
+				ticket_number = rand() % 9000 + 1000; // Generates a random number between 1000 and 9999 (including both)			
 
 				// If ticket doesn't already exist in the waiting queue, any bus, or in any bus stop
 				if ((ticket_number_already_exists_in_queue(ticket_number, queue) == false)
@@ -331,7 +331,6 @@ void next_step(Buses* buses, Bus_stops* bus_stops, Passengers* queue, Names* fir
 
 	//! Random passagengers from each bus leave at the bus stop
 	passengers_exit_buses(bus_stops, buses, queue);
-
 
 
 

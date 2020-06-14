@@ -55,7 +55,7 @@ bool ticket_number_already_exists_in_bus_stops(int ticket_number, Bus_stops* bus
 
 	}
 
-	
+	return false;
 
 }
 
