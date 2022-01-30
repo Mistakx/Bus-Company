@@ -5,5 +5,5 @@ As an assignment for university, I had to develop a bus company simulation progr
 
 Project graded in 20 / 20.
 
-![Project](./bus-company.png)
+![Project](./busCompany.png)
 Format: ![Alt Text](url)
